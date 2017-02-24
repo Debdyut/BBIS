@@ -12,8 +12,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import DatabaseHandler.DatabaseHandler;
-
-
+import DatabaseHandler.MonitorLock;
 
 
 
@@ -389,30 +388,21 @@ public class AddBloodUnit extends JDialog implements ActionListener {
 		
 		if(s.equals("Submit")) {
 			
-			/*
-			System.out.println("Bag no:" + jTextField1.getText());
-			System.out.println("ABo: " + jComboBox1.getSelectedItem().toString());
-			System.out.println("RH: " + jComboBox2.getSelectedItem().toString());
-			System.out.println("Type: " + jComboBox3.getSelectedItem().toString());
-			System.out.println("Components: " + jComboBox4.getSelectedItem().toString());
-			System.out.println("Blood Bank ID: " + jTextField6.getText());
-			System.out.println("Donor ID: " + jTextField7.getText());
-			System.out.println("Donated on: " + datePicker1.getModel().getYear() + "-" + datePicker1.getModel().getMonth() + "-" + datePicker1.getModel().getDay());
-			System.out.println("Expiry: " + datePicker.getModel().getYear() + "-" + datePicker.getModel().getMonth() + "-" + datePicker.getModel().getDay());		
-			*/
-			
+					
 			String query = "insert into blood_inventory values('"+ jTextField1.getText() +"', '"+ jComboBox1.getSelectedItem().toString() +"', '"+ jComboBox2.getSelectedItem().toString() +"', '"+ datePicker1.getModel().getYear() + "-" + datePicker1.getModel().getMonth() + "-" + datePicker1.getModel().getDay() +"', '"+ datePicker.getModel().getYear() + "-" + datePicker.getModel().getMonth() + "-" + datePicker.getModel().getDay() +"', '"+ jComboBox3.getSelectedItem().toString() +"', '"+ jComboBox4.getSelectedItem().toString() +"', '"+ jTextField6.getText() +"', '"+ jTextField7.getText() +"')";
+			
+			MonitorLock ml = new MonitorLock(query, "update", dh);
+			
 			try {
-				dh.update(query);
-				
-				JOptionPane.showMessageDialog(this,"Update successful!");
-				
-				dispose();
-				
-			} catch (SQLException e1) {
+				ml.t.join();
+			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}			
+			}
+			
+			JOptionPane.showMessageDialog(this,"Update successful!");
+			
+			dispose();			
 		}
 		
 	}

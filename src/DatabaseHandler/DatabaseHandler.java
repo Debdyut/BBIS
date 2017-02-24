@@ -4,7 +4,8 @@ import java.sql.*;
 
 public class DatabaseHandler {
 
-	Connection con;		
+	Connection con;
+	Thread t;
 	
 	public DatabaseHandler () {
 		try {
@@ -12,8 +13,10 @@ public class DatabaseHandler {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}		
 	}	
+	
+	
 
 	public ResultSet read(String str) throws SQLException {		
 		Statement st = con.createStatement();
@@ -26,6 +29,7 @@ public class DatabaseHandler {
 		st.executeUpdate(str);		
 		st.close();
 	}
+	
 	
 	
 }
