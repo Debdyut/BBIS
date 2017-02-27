@@ -23,7 +23,7 @@ public class MainFrame {
 	public void initComponents() {
 		jfrm = new JFrame();
 		jfrm.setTitle("Blood Bank Management System");
-		jfrm.setSize(800, 500);
+		jfrm.setSize(1280, 720);
 		jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jfrm.setVisible(true);
 		
