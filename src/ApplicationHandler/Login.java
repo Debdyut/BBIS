@@ -170,6 +170,15 @@ public class Login  extends javax.swing.JDialog implements ActionListener {
 				ResultSet rs = dh.read(str);
 								
 				if(rs.next()) {					
+					
+					ApplicationData.bbID = rs.getString(4);
+					
+					ResultSet rs1 = dh.read("select short_name from blood_bank_list where id = " + ApplicationData.bbID);
+					
+					rs1.next();									
+					
+					ApplicationData.setData(rs1.getString(1));
+					
 					JOptionPane.showMessageDialog(this,"Login successful!");
 					
 					dispose();

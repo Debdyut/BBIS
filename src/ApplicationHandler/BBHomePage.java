@@ -25,8 +25,8 @@ public class BBHomePage extends JPanel implements ActionListener {
 	CardLayout cd;
 	
 	JMenuBar jmb;
-	JMenu jmFile, jmNew;
-	JMenuItem jmiBloodBag, jmiDonor, jmiPatient, jmiExit;
+	JMenu jmFile, jmNew, jmOptions;
+	JMenuItem jmiBloodBag, jmiDonor, jmiPatient, jmiExit, jmiChangePassword;
 	
 	DatabaseHandler dh;
 	
@@ -74,7 +74,7 @@ public class BBHomePage extends JPanel implements ActionListener {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel2.setForeground(Color.WHITE);
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Welcome, Maniktala Blood Bank!");
+        jLabel2.setText("Welcome, " + ApplicationData.bbname + "!");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -220,6 +220,13 @@ public class BBHomePage extends JPanel implements ActionListener {
 		jmFile.add(jmiExit);
 		
 		jmb.add(jmFile);
+		
+		jmOptions = new JMenu("Options");
+		jmiChangePassword = new JMenuItem("Change Password"); jmiChangePassword.addActionListener(this);
+		jmOptions.add(jmiChangePassword);
+		
+		jmb.add(jmOptions);
+		
 	}
 	
 	public JMenuBar getMenuBar() {
@@ -251,6 +258,17 @@ public class BBHomePage extends JPanel implements ActionListener {
 	            }
 	        });
 		}
+		else if(s.equals("Change Password")) {
+			java.awt.EventQueue.invokeLater(new Runnable() {
+	            public void run() {
+	                ChangePassword dialog = new ChangePassword(new javax.swing.JFrame(), true, dh);	                
+	                dialog.setTitle("Change Password");
+	                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	                dialog.setVisible(true);
+	            }
+	        });
+		}
+		
 		else if(s.equals("Exit")) {
 			System.exit(0);
 		}

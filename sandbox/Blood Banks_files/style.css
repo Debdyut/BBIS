@@ -1,0 +1,42 @@
+td {
+	font-size:11px;
+	font-family:arial;
+	text-align:center;
+}
+
+h1
+{
+	 font-family: Arial, Helvetica, sans-serif;
+	 font-size:16px;
+	 color: #DC143C;
+}
+
+.tableborder 
+{
+	border: 1px solid;
+	border-color: #DC143C;
+	background-color: #DC143C;
+}
+.tablehealing
+{
+	font: bold;
+	background-color: #FFD700;
+}
+.tablecell
+{
+	background-color: #ffffff;
+}
+
+.more a
+{
+text-decoration:none;
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#000000;
+}
+
+.more a:hover
+{
+text-decoration:none;
+background-color:#E4D78B;
+}

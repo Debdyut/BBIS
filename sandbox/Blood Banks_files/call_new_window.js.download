@@ -1,0 +1,15 @@
+function show_window(m_file)
+{
+    //var height=(screen.availheight-60);
+    //var width=(screen.availwidth-80);
+
+    var height=(screen.availheight-50);
+    var width=(screen.availwidth);
+
+    var top=(screen.availheight-height)/2;
+    var left=(screen.availwidth-width)/2;
+    var ref;
+    ref="scrollbars=1,top=" + top + ",left=" + left + ",height=" + height + ",width=" + width
+
+    window.open(m_file,"",ref);
+}
