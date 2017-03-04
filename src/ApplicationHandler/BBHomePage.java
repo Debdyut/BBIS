@@ -170,7 +170,7 @@ public class BBHomePage extends JPanel implements ActionListener {
         );
         
         
-        QueryPanel qp = new QueryPanel(jPanel5);
+        QueryPanel qp = new QueryPanel(jPanel5, dh);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

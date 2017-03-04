@@ -2,7 +2,13 @@ package ApplicationHandler;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+import DatabaseHandler.DatabaseHandler;
 
 public class SearchInventoryPanel extends JPanel {
 	
@@ -19,9 +25,16 @@ public class SearchInventoryPanel extends JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+	DefaultTableModel tableModel;
+	private javax.swing.JButton jButton1;
     // End of variables declaration
 	
-	public SearchInventoryPanel() {
+	DatabaseHandler dh;
+	ResultSet rs;
+	
+	public SearchInventoryPanel(DatabaseHandler dh) {
+		
+		this.dh = dh;
 		
 		initComponents();
 		
@@ -41,7 +54,8 @@ public class SearchInventoryPanel extends JPanel {
         jLabel5 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        //jTable1 = new javax.swing.JTable();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Search Inventory");
@@ -74,11 +88,39 @@ public class SearchInventoryPanel extends JPanel {
         jLabel4.setText("Type:");
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Whole Blood", "Component" }));
+        
+        jComboBox3.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				//System.out.println(jComboBox3.getSelectedItem()); 
+				
+				if(jComboBox3.getSelectedItem().equals("Component")) {
+					jComboBox4.setEnabled(true);
+				}
+				else {
+					jComboBox4.setEnabled(false);
+				}
+			}
+        	
+        });
 
         jLabel5.setText("Component:");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Whole Blood","Packed Red Cell","Platelet Concentrate","Fresh Frozen Plasma","Cyro Precipitate" }));
-
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Whole Blood","Packed Red Cell","Platelet Concentrate","Fresh Frozen Plasma","Cyro Precipitate" }));        
+        
+        jComboBox4.setEnabled(false);
+        
+        jButton1.setText("Search"); jButton1.addActionListener(new ActionListener () {
+        	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				searchInventory();
+			}
+        	
+        });
+        
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -100,7 +142,10 @@ public class SearchInventoryPanel extends JPanel {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap()
+                )
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,21 +159,18 @@ public class SearchInventoryPanel extends JPanel {
                     .addComponent(jLabel4)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                	.addComponent(jButton1))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+               
+        String[] colHeads = {"Blood Bag Number", "Blood Group", "RH", "Type", "Component", "Donor ID", "Date of Collection", "Expiry Date"};
+        
+        tableModel = new DefaultTableModel(colHeads, 0);
+        
+        jTable1 = new javax.swing.JTable(tableModel);
+        
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -155,6 +197,55 @@ public class SearchInventoryPanel extends JPanel {
                 .addContainerGap())
         );
 		
+	}
+
+	
+	
+	private void searchInventory() {
+		
+		String sqlStatement;
+		
+		StringBuilder query = new StringBuilder();
+		query.append("select blood_bag_number, abo, rh, type, Component, donorid, date_of_collection, expiry_date from blood_inventory where ");		
+		query.append("bbid = '" + ApplicationData.bbID + "'");
+		query.append(" and ");
+		query.append("abo = '" + jComboBox1.getSelectedItem().toString() + "'");
+		query.append(" and ");
+		query.append("rh = '" + jComboBox2.getSelectedItem().toString() + "'");
+		query.append(" and ");
+		query.append("type = '" + jComboBox3.getSelectedItem().toString() + "'");
+		if(jComboBox3.getSelectedItem().toString().equals("Component")) {
+			query.append(" and ");		
+			query.append("Component = '" + jComboBox4.getSelectedItem().toString() + "'");
+		}
+		
+		sqlStatement = query.toString();
+		
+		System.out.println(sqlStatement);
+		
+		try {
+			rs = dh.read(sqlStatement);
+			
+			while(rs.next()) {
+			
+				Object[] obj =  new Object[8];
+				obj[0] = rs.getString(1);
+				obj[1] = rs.getString(2);
+				obj[2] = rs.getString(3);
+				obj[3] = rs.getString(4);
+				obj[4] = rs.getString(5);
+				obj[5] = rs.getString(6);
+				obj[6] = rs.getDate(7).toString();
+				obj[7] = rs.getDate(8).toString();
+				
+				tableModel.addRow(obj);
+				
+			}			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

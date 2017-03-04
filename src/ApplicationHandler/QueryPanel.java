@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import DatabaseHandler.DatabaseHandler;
+
 public class QueryPanel {
 
 	
@@ -11,8 +13,11 @@ public class QueryPanel {
 	JPanel jp;
 	CardLayout cd;
 	
-	public QueryPanel(JPanel jp) {
+	DatabaseHandler dh;
+	
+	public QueryPanel(JPanel jp, DatabaseHandler dh) {
 		
+		this.dh = dh;
 
 		this.jp = jp;
 		
@@ -29,7 +34,7 @@ public class QueryPanel {
 		
 		jp.setBackground(new Color(240, 230, 230));
 		
-		SearchInventoryPanel si = new SearchInventoryPanel();
+		SearchInventoryPanel si = new SearchInventoryPanel(dh);
 		
 		jp.add("Search Inventory", si);
 		

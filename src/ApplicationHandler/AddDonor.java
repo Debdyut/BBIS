@@ -105,6 +105,12 @@ public class AddDonor extends JDialog implements ActionListener {
         jButton1 = new javax.swing.JButton();
         bg = new ButtonGroup();
         
+        jRadioButton1.setActionCommand("Yes");
+        jRadioButton2.setActionCommand("No");
+        
+        jRadioButton1.addActionListener(this);
+        jRadioButton2.addActionListener(this);
+        
         jRadioButton1.setSelected(true);
         bg.add(jRadioButton1);
         bg.add(jRadioButton2);
@@ -403,11 +409,17 @@ public class AddDonor extends JDialog implements ActionListener {
 			System.out.println("Emergency Donor: " + bg.getSelection().getActionCommand());
 			System.out.println("Last Donated: " + datePicker.getModel().getValue());
 			
+			
+			
+			int ed = (bg.getSelection().getActionCommand().equals("Yes"))? 1 : 0;
+			
+			String donorID = null;
+			
 			try {
-				ResultSet rs = dh.read("Select value from application_data where name = 'donor_id'");
+				ResultSet rs = dh.read("select count(*) from donor_list");								
 				
 				if(rs.next()) {
-					//System.out.println(rs.getString(1));					
+					donorID = new DonorCodeGenerator().generateCode(rs.getInt(1));					
 				}
 				
 			} catch (SQLException e2) {
@@ -416,16 +428,16 @@ public class AddDonor extends JDialog implements ActionListener {
 			
 			StringBuilder strb = new StringBuilder();
 			strb.append("insert into donor_list values(");
-			strb.append("'D123',");
-			strb.append("'John Wickle',");
-			strb.append("'33, Russel Street, UK',");
-			strb.append("26,");
-			strb.append("'Male',");
-			strb.append("'9804578465',");
-			strb.append("'john@gmail.com',");
-			strb.append("'A+',");
-			strb.append("1,");
-			strb.append("'2017-8-20'");		
+			strb.append("'" + donorID + "',");
+			strb.append("'" + jTextField1.getText() +"',");
+			strb.append("'" + jTextArea1.getText() + "',");
+			strb.append("" + jTextField2.getText() + ",");
+			strb.append("'" + jComboBox1.getSelectedItem().toString() + "',");
+			strb.append("'" + jTextField3.getText() + "',");
+			strb.append("'" + jTextField4.getText() + "',");
+			strb.append("'" + jComboBox3.getSelectedItem().toString() + "',");
+			strb.append("" + ed +",");
+			strb.append("'" + datePicker.getModel().getYear() + "-" + datePicker.getModel().getMonth() + "-" + datePicker.getModel().getDay() + "'");		
 			strb.append(")");			
 			
 			try {
@@ -434,6 +446,8 @@ public class AddDonor extends JDialog implements ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
+			dispose();
 		}
 		
 	}

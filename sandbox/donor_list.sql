@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2017 at 05:04 AM
+-- Generation Time: Mar 04, 2017 at 04:15 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -44,7 +44,8 @@ CREATE TABLE `donor_list` (
 --
 
 INSERT INTO `donor_list` (`donor_id`, `name`, `address`, `age`, `sex`, `phone`, `email`, `blood_group`, `emergency_donor`, `last_donated`) VALUES
-('D123', 'John Wickle', '33, Russel Street, UK', 26, 'Male', '9804578465', 'john@gmail.com', 'A+', 1, '2017-08-20');
+('D00000000000', 'Debdyut Hajra', '22, Ballygaunge Place (EAST), Kolkata - 19', 21, 'Male', '7852642321', 'debdyut@fleckens.hu', 'B+', 0, '2017-02-13'),
+('D00000000001', 'Ranajoy Hajra', '13B, Paramhansa Deb Road, Kolkata', 19, 'Male', '7278852456', 'ranajoy@fleckens.hu', 'A+', 1, '2016-09-30');
 
 --
 -- Indexes for dumped tables
