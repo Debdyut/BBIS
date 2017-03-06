@@ -45,7 +45,8 @@ public class BBHomePage extends JPanel implements ActionListener {
         setBackground(Color.WHITE);
 
         
-
+        
+        
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -70,6 +71,8 @@ public class BBHomePage extends JPanel implements ActionListener {
         jLabel1.setText("Blood Bank Information System");
 
         jButton1.setText("Sign Out");
+        
+        QueryPanel qp = new QueryPanel(jPanel5, dh);
         
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel2.setForeground(Color.WHITE);
@@ -127,7 +130,7 @@ public class BBHomePage extends JPanel implements ActionListener {
         jLabel3.setText("Tasks");
 
         
-        TaskListPanel tlp = new TaskListPanel(jPanel6);        
+        TaskListPanel tlp = new TaskListPanel(jPanel6, qp);        
         
         
 
@@ -170,7 +173,7 @@ public class BBHomePage extends JPanel implements ActionListener {
         );
         
         
-        QueryPanel qp = new QueryPanel(jPanel5, dh);
+        //QueryPanel qp = new QueryPanel(jPanel5, dh);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

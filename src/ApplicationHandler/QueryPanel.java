@@ -38,10 +38,16 @@ public class QueryPanel {
 		
 		jp.add("Search Inventory", si);
 		
+		SearchDonorPanel sd = new SearchDonorPanel(dh);
 		
-		cd.show(jp, "Search Inventory");
+		jp.add("Search Donor", sd);
 				
-		
+		cd.show(jp, "Search Inventory");
+						
+	}
+	
+	void changePanel(String panelName) {
+		cd.show(jp, panelName);
 	}
 	
 }
