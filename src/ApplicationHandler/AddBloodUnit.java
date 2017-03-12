@@ -154,7 +154,7 @@ public class AddBloodUnit extends JDialog implements ActionListener {
                 .addContainerGap())
         );
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        //jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -227,7 +227,7 @@ public class AddBloodUnit extends JDialog implements ActionListener {
                 .addContainerGap())
         );
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Whole Blood","Packed Red Cell","Platelet Concentrate","Fresh Frozen Plasma","Cyro Precipitate" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Not Applicable", "Packed Red Cell","Platelet Concentrate","Fresh Frozen Plasma","Cyro Precipitate" }));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);

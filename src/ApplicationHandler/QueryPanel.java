@@ -41,6 +41,10 @@ public class QueryPanel {
 		SearchDonorPanel sd = new SearchDonorPanel(dh);
 		
 		jp.add("Search Donor", sd);
+		
+		BloodIssueHistoryPanel bihp = new BloodIssueHistoryPanel(dh);
+		
+		jp.add("Blood Issue History", bihp);
 				
 		cd.show(jp, "Search Inventory");
 						

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2017 at 11:02 AM
+-- Generation Time: Mar 12, 2017 at 11:38 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -37,6 +37,13 @@ CREATE TABLE `blood_inventory` (
   `bbid` varchar(50) NOT NULL,
   `donorid` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `blood_inventory`
+--
+
+INSERT INTO `blood_inventory` (`blood_bag_number`, `abo`, `rh`, `date_of_collection`, `expiry_date`, `type`, `Component`, `bbid`, `donorid`) VALUES
+('BB3', 'B+', 'Positive', '2017-03-05', '2018-03-05', 'Component', 'Cyro Precipitate', '2', 'D00000000003');
 
 --
 -- Indexes for dumped tables

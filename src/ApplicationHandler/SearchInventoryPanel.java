@@ -107,7 +107,7 @@ public class SearchInventoryPanel extends JPanel {
 
         jLabel5.setText("Component:");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Whole Blood","Packed Red Cell","Platelet Concentrate","Fresh Frozen Plasma","Cyro Precipitate" }));        
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Not Applicable","Packed Red Cell","Platelet Concentrate","Fresh Frozen Plasma","Cyro Precipitate" }));        
         
         jComboBox4.setEnabled(false);
         
@@ -165,11 +165,30 @@ public class SearchInventoryPanel extends JPanel {
         );
 
                
-        String[] colHeads = {"Blood Bag Number", "Blood Group", "RH", "Type", "Component", "Donor ID", "Date of Collection", "Expiry Date"};
+        String[] colHeads = {"Bag Number", "Blood Group", "RH", "Type", "Component", "Donor ID", "Date of Collection", "Expiry Date", ""};
         
         tableModel = new DefaultTableModel(colHeads, 0);
         
         jTable1 = new javax.swing.JTable(tableModel);
+        
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {        	        	       	
+        	
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            	int row = jTable1.rowAtPoint(evt.getPoint());
+                int col = jTable1.columnAtPoint(evt.getPoint());                
+                if(col == 8) {
+                	
+                	IssueBlood dialog = new IssueBlood(new javax.swing.JFrame(), true, dh, jComboBox1.getSelectedItem().toString(), jComboBox2.getSelectedItem().toString(), jComboBox3.getSelectedItem().toString(), jComboBox4.getSelectedItem().toString(), jTable1.getValueAt(row, 0).toString());
+                    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                    dialog.setTitle("Issue Blood");
+                    dialog.setVisible(true);
+                	
+                    searchInventory();
+                	
+                }
+            }
+        });
         
         jScrollPane1.setViewportView(jTable1);
 
@@ -219,16 +238,18 @@ public class SearchInventoryPanel extends JPanel {
 			query.append("Component = '" + jComboBox4.getSelectedItem().toString() + "'");
 		}
 		
-		sqlStatement = query.toString();
+		sqlStatement = query.toString();		
 		
-		System.out.println(sqlStatement);
+		while (tableModel.getRowCount() > 0) {
+			tableModel.removeRow(0);
+		}
 		
 		try {
-			rs = dh.read(sqlStatement);
+			rs = dh.read(sqlStatement);						
 			
 			while(rs.next()) {
 			
-				Object[] obj =  new Object[8];
+				Object[] obj =  new Object[9];
 				obj[0] = rs.getString(1);
 				obj[1] = rs.getString(2);
 				obj[2] = rs.getString(3);
@@ -237,6 +258,7 @@ public class SearchInventoryPanel extends JPanel {
 				obj[5] = rs.getString(6);
 				obj[6] = rs.getDate(7).toString();
 				obj[7] = rs.getDate(8).toString();
+				obj[8] = "Issue";
 				
 				tableModel.addRow(obj);
 				
@@ -247,5 +269,7 @@ public class SearchInventoryPanel extends JPanel {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 }

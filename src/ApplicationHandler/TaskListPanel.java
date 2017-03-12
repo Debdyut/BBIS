@@ -25,7 +25,7 @@ public class TaskListPanel {
 				
 		li1 = new JLabel("Search Inventory"); li1.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		li2 = new JLabel("Search Donor"); li2.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		li3 = new JLabel("View Blood Transaction History"); li3.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		li3 = new JLabel("View Blood Issue History"); li3.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		
 		li1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -44,8 +44,8 @@ public class TaskListPanel {
 		
 		li3.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				//qp.changePanel("");
-				System.out.println("Transaction History");
+				qp.changePanel("Blood Issue History");
+				//System.out.println("Transaction History");
 			}
 		});
 		

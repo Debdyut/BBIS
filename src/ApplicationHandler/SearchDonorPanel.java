@@ -2,7 +2,11 @@ package ApplicationHandler;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import DatabaseHandler.DatabaseHandler;
 
@@ -19,9 +23,11 @@ public class SearchDonorPanel extends JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    DefaultTableModel tableModel;
     // End of variables declaration   
     
     DatabaseHandler dh;
+    ResultSet rs;
     
     public SearchDonorPanel(DatabaseHandler dh) {
     	
@@ -43,6 +49,7 @@ public class SearchDonorPanel extends JPanel {
 	    jButton1 = new javax.swing.JButton();
 	    jScrollPane1 = new javax.swing.JScrollPane();
 	    jTable1 = new javax.swing.JTable();
+	    
 	
 	    jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 	    jLabel1.setText("Search Donor");
@@ -72,7 +79,16 @@ public class SearchDonorPanel extends JPanel {
 	
 	    jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Positive", "Negative" }));    
 	
-	    jButton1.setText("Search");
+	    jButton1.setText("Search"); jButton1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				searchDonor();
+				
+			}
+	    	
+	    });
 	
 	    javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
 	    jPanel3.setLayout(jPanel3Layout);
@@ -104,17 +120,11 @@ public class SearchDonorPanel extends JPanel {
 	            .addContainerGap(21, Short.MAX_VALUE))
 	    );
 	
-	    jTable1.setModel(new javax.swing.table.DefaultTableModel(
-	        new Object [][] {
-	            {null, null, null, null},
-	            {null, null, null, null},
-	            {null, null, null, null},
-	            {null, null, null, null}
-	        },
-	        new String [] {
-	            "Title 1", "Title 2", "Title 3", "Title 4"
-	        }
-	    ));
+	    String[] colHeads = {"Name", "Age", "Gender", "Phone", "Email"};
+        
+        tableModel = new DefaultTableModel(colHeads, 0);
+        
+        jTable1 = new javax.swing.JTable(tableModel);
 	    jScrollPane1.setViewportView(jTable1);
 	
 	    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -164,4 +174,46 @@ public class SearchDonorPanel extends JPanel {
 	                .addGap(0, 0, Short.MAX_VALUE)))
 	    );
     }
+
+    
+    void searchDonor() {
+    	
+    	String sqlStatement;
+		
+		StringBuilder query = new StringBuilder();
+		query.append("select name, age, sex, phone, email from donor_list where ");		
+		query.append("blood_group = '" + jComboBox1.getSelectedItem().toString() + "'");
+		query.append(" and ");
+		query.append("rh = '" + jComboBox2.getSelectedItem().toString() + "'");		
+		
+		sqlStatement = query.toString();				
+		
+		while (tableModel.getRowCount() > 0) {
+			tableModel.removeRow(0);
+		}
+		
+		try {
+			rs = dh.read(sqlStatement);						
+			
+			while(rs.next()) {
+			
+				Object[] obj =  new Object[5];
+				obj[0] = rs.getString(1);				
+				obj[1] = rs.getInt(2);
+				obj[2] = rs.getString(3);
+				obj[3] = rs.getString(4);
+				obj[4] = rs.getString(5);							
+				
+				tableModel.addRow(obj);
+				
+			}			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+    
+	
 }
