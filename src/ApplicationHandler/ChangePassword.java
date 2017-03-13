@@ -2,11 +2,14 @@ package ApplicationHandler;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.swing.*;
 
 import DatabaseHandler.DatabaseHandler;
 
-public class ChangePassword extends JDialog {
+public class ChangePassword extends JDialog  implements ActionListener  {
 	
 	private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -149,7 +152,44 @@ public class ChangePassword extends JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Submit");
+        jButton1.setText("Submit"); 
+        jButton1.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				if(jLabel5.getText().equals("Password is matching!")) {
+					
+					String query = "select password from " + ApplicationData.type + " where bbid = '" + ApplicationData.bbID + "'";
+					
+					try {
+						ResultSet rs1 = dh.read(query);
+						rs1.next();
+						
+						if(rs1.getString(1).equals(jPasswordField1.getText().toString())) {							
+							
+							query = "update " + ApplicationData.type + " set password = '" + jPasswordField2.getText().toString() + "' where bbid = '" + ApplicationData.bbID + "'";
+							
+							dh.update(query);
+							
+							JOptionPane.showMessageDialog(jButton1, "Update Successful!");
+							
+							dispose();
+							
+						}
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+			}
+        	
+        	
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,5 +235,12 @@ public class ChangePassword extends JDialog {
 	    	jLabel5.setForeground(Color.RED);
 	    }
     	
-    } 
+    }
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	} 
 }
