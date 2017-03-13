@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2017 at 05:00 AM
+-- Generation Time: Mar 13, 2017 at 05:06 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -29,17 +29,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `hospital` (
   `id` varchar(20) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL
+  `password` varchar(50) NOT NULL,
+  `bbid` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `hospital`
 --
 
-INSERT INTO `hospital` (`id`, `username`, `password`) VALUES
-('1', 'sskm', '123456'),
-('2', 'nilratan', 'qwerty'),
-('3', 'rgkar', 'ok');
+INSERT INTO `hospital` (`id`, `username`, `password`, `bbid`) VALUES
+('1', 'sskm', '123456', ''),
+('2', 'nilratan', 'qwerty', ''),
+('3', 'rgkar', 'ok', '3');
 
 --
 -- Indexes for dumped tables

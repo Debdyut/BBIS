@@ -1,42 +1,49 @@
 package ApplicationHandler;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.CardLayout;
+import java.awt.Color;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import DatabaseHandler.DatabaseHandler;
 
-public class BBHomePage extends JPanel implements ActionListener {
+public class HHomePage extends BBHomePage {
 
-	javax.swing.JButton jButton1;
-    javax.swing.JLabel jLabel1;
-    javax.swing.JLabel jLabel2;
-	javax.swing.JPanel jPanel1;
-    javax.swing.JPanel jPanel2;
-    javax.swing.JPanel jPanel3;
-    
-    javax.swing.JPanel jPanel4;
-    javax.swing.JPanel jPanel5;
-    javax.swing.JLabel jLabel3;
-    javax.swing.JPanel jPanel6;
-    javax.swing.JSeparator jSeparator1;
-    
-    
-	
-	JMenuBar jmb;
-	JMenu jmFile, jmNew, jmOptions;
-	JMenuItem jmiBloodBag, jmiDonor, jmiExit, jmiChangePassword;
-	
-	DatabaseHandler dh;
-	
-	public BBHomePage(DatabaseHandler dh) {		
-		this.dh = dh;
+	public HHomePage(DatabaseHandler dh) {
+		super(dh);
 		
-		initComponents();
 	}
 	
+	public void createMenuBar() {
+		jmb = new JMenuBar();
+		jmFile = new JMenu("File");
+		
+		jmNew = new JMenu("New");
+		jmiDonor = new JMenuItem("Donor"); jmiDonor.addActionListener(this); 
+		jmNew.add(jmiDonor);
+		
+		jmiExit = new JMenuItem("Exit"); jmiExit.addActionListener(this);
+		
+		jmFile.add(jmNew);
+		jmFile.add(jmiExit);
+		
+		jmb.add(jmFile);
+		
+		jmOptions = new JMenu("Options");
+		jmiChangePassword = new JMenuItem("Change Password"); jmiChangePassword.addActionListener(this);
+		jmOptions.add(jmiChangePassword);
+		
+		jmb.add(jmOptions);
+		
+	}	
+
+	
 	public void initComponents() {
-				
+		
+			
 		createMenuBar();
 		
         setBackground(Color.WHITE);
@@ -66,7 +73,7 @@ public class BBHomePage extends JPanel implements ActionListener {
 
         jButton1.setText("Sign Out");
         
-        QueryPanel qp = new QueryPanel(jPanel5, dh);
+        HQueryPanel qp = new HQueryPanel(jPanel5, dh);
         
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel2.setForeground(Color.WHITE);
@@ -124,7 +131,7 @@ public class BBHomePage extends JPanel implements ActionListener {
         jLabel3.setText("Tasks");
 
         
-        TaskListPanel tlp = new TaskListPanel(jPanel6, qp);        
+        HTaskListPanel tlp = new HTaskListPanel(jPanel6, qp);        
         
         
 
@@ -166,7 +173,8 @@ public class BBHomePage extends JPanel implements ActionListener {
             .addGap(0, 0, Short.MAX_VALUE)
         );
         
-                
+        
+       
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -192,77 +200,8 @@ public class BBHomePage extends JPanel implements ActionListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-		
-	}
-	
-	public void createMenuBar() {
-		jmb = new JMenuBar();
-		jmFile = new JMenu("File");
-		
-		jmNew = new JMenu("New");
-		jmiBloodBag = new JMenuItem("Blood Unit"); jmiBloodBag.addActionListener(this);
-		jmiDonor = new JMenuItem("Donor"); jmiDonor.addActionListener(this); 
-		jmNew.add(jmiBloodBag);
-		jmNew.add(jmiDonor);
-		
-		jmiExit = new JMenuItem("Exit"); jmiExit.addActionListener(this);
-		
-		jmFile.add(jmNew);
-		jmFile.add(jmiExit);
-		
-		jmb.add(jmFile);
-		
-		jmOptions = new JMenu("Options");
-		jmiChangePassword = new JMenuItem("Change Password"); jmiChangePassword.addActionListener(this);
-		jmOptions.add(jmiChangePassword);
-		
-		jmb.add(jmOptions);
-		
-	}
-	
-	public JMenuBar getMenuBar() {
-		return jmb;
-		
-	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		String s = e.getActionCommand();
-		
-		if(s.equals("Blood Unit")) {
-			java.awt.EventQueue.invokeLater(new Runnable() {
-	            public void run() {
-	                AddBloodUnit dialog = new AddBloodUnit(new javax.swing.JFrame(), true, dh);	                
-	                dialog.setTitle("Add Blood Unit");
-	                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	                dialog.setVisible(true);
-	            }
-	        });
-		}
-		else if(s.equals("Donor")) {
-			java.awt.EventQueue.invokeLater(new Runnable() {
-	            public void run() {
-	                AddDonor dialog = new AddDonor(new javax.swing.JFrame(), true, dh);	                
-	                dialog.setTitle("Add Donor");
-	                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	                dialog.setVisible(true);
-	            }
-	        });
-		}
-		else if(s.equals("Change Password")) {
-			java.awt.EventQueue.invokeLater(new Runnable() {
-	            public void run() {
-	                ChangePassword dialog = new ChangePassword(new javax.swing.JFrame(), true, dh);	                
-	                dialog.setTitle("Change Password");
-	                dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	                dialog.setVisible(true);
-	            }
-	        });
-		}
-		
-		else if(s.equals("Exit")) {
-			System.exit(0);
-		}
+       
 		
 	}
 	

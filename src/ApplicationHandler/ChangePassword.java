@@ -188,7 +188,7 @@ public class ChangePassword extends JDialog {
 	    
 	    if(s1.equals(s2)) {
 	    	jLabel5.setText("Password is matching!");
-	    	jLabel5.setForeground(Color.GREEN);
+	    	jLabel5.setForeground(new Color(30, 120, 0));
 	    }
 	    else {
 	    	jLabel5.setText("Passwords do not match!");

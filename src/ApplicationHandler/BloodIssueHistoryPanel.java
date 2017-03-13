@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 
 import DatabaseHandler.DatabaseHandler;
 
-public class BloodIssueHistoryPanel extends JPanel{
+public class BloodIssueHistoryPanel extends JPanel implements Runnable{
 
 	private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -20,12 +20,18 @@ public class BloodIssueHistoryPanel extends JPanel{
     ResultSet rs;
     DefaultTableModel tableModel;
     
+    Thread th;
+    
     public BloodIssueHistoryPanel(DatabaseHandler dh) {
-    	this.dh = dh;
-    	
+    	this.dh = dh;    	
+    	    		
         initComponents();
         
-        populateTable();
+        th = new Thread(this);
+        
+        th.start();
+        
+        //populateTable();
     }
     
     private void initComponents() {
@@ -87,7 +93,7 @@ public class BloodIssueHistoryPanel extends JPanel{
     
     private void populateTable() {
     	
-String sqlStatement;
+    	String sqlStatement;
 		
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT `bag_no`, `blood_group`, `rh`, `type`, `component`, `health_center`, `doctor_name`, `patient_name`, `p_age`, `p_gender`, `p_req_date`, `indication_of_transfusion` FROM `blood_transaction` where ");		
@@ -130,5 +136,20 @@ String sqlStatement;
 		}
     	
     }
+
+	@Override
+	public void run() {		
+		
+		populateTable();
+		
+		try {
+			Thread.sleep(10000); // Updates view after every 10 seconds
+			run();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

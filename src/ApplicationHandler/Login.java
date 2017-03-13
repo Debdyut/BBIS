@@ -165,6 +165,8 @@ public class Login  extends javax.swing.JDialog implements ActionListener {
 				
 				String type = (jComboBox1.getSelectedItem().toString().equals("Hospital"))? "hospital" : "blood_bank";
 				
+				ApplicationData.type = type;
+				
 				String str = "select * from " + type + " where username = '" + jTextField1.getText() + "' and password = '" + jPasswordField1.getText().toString() + "'";								
 				
 				ResultSet rs = dh.read(str);
@@ -173,7 +175,7 @@ public class Login  extends javax.swing.JDialog implements ActionListener {
 					
 					ApplicationData.bbID = rs.getString(4);
 					
-					ResultSet rs1 = dh.read("select short_name from blood_bank_list where id = " + ApplicationData.bbID);
+					ResultSet rs1 = dh.read("select short_name from " + ApplicationData.type + "_list where id = " + ApplicationData.bbID);
 					
 					rs1.next();									
 					

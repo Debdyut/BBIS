@@ -8,6 +8,8 @@ public class ApplicationData {
 	
 	static String bbname = null;
 	
+	static String type = null;
+	
 	static void setData(String bname) {
 		
 		bbname = bname;

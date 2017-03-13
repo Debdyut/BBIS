@@ -130,6 +130,10 @@ public class AddBloodUnit extends JDialog implements ActionListener {
         jLabel8.setText("Date of Collection:");
 
         jLabel9.setText("Expiry Date:");
+        
+        jTextField6.setText(ApplicationData.bbID);
+        //jTextField6.setEditable(false);
+        jTextField6.setEnabled(false);
 
         //jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" }));
 
@@ -396,14 +400,12 @@ public class AddBloodUnit extends JDialog implements ActionListener {
 			try {
 				ml.t.join();
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
 			JOptionPane.showMessageDialog(this,"Update successful!");
 			
 			dispose();			
-		}
-		
+		}		
 	}
 }

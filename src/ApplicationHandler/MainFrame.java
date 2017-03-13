@@ -22,25 +22,34 @@ public class MainFrame {
 	
 	public void initComponents() {
 		jfrm = new JFrame();
-		jfrm.setTitle("Blood Bank Management System");
+		jfrm.setTitle("Blood Bank Information System");
 		jfrm.setSize(1280, 720);
 		jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jfrm.setVisible(true);
 		
-		cd = new CardLayout();
 		
-		jp = new JPanel();
-		jp.setLayout(cd);
+		if(ApplicationData.type.equals("blood_bank")) {				
 		
-		jfrm.add(jp, BorderLayout.CENTER);
-		
-		BBHomePage jpn = new BBHomePage(jp, cd, dh);
+		BBHomePage jpn = new BBHomePage(dh);
 		
 		jfrm.setJMenuBar(jpn.getMenuBar());
+				
 		
-		jp.add("Blood Bank", jpn);
+		jfrm.add(jpn, BorderLayout.CENTER);
 		
-		cd.show(jp, "Blood Bank");
+		}
+		
+		else {
+			
+			HHomePage hpn = new HHomePage(dh);
+			
+			jfrm.setJMenuBar(hpn.getMenuBar());
+			
+			
+			jfrm.add(hpn, BorderLayout.CENTER);
+			
+		}
+		
 		
 	}
 	

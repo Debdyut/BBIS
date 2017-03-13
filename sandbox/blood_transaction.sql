@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2017 at 11:38 AM
+-- Generation Time: Mar 13, 2017 at 05:06 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -51,7 +51,9 @@ CREATE TABLE `blood_transaction` (
 
 INSERT INTO `blood_transaction` (`serial`, `bbid`, `bag_no`, `blood_group`, `rh`, `type`, `component`, `health_center`, `hc_reg_no`, `doctor_name`, `patient_name`, `p_reg_no`, `p_age`, `p_gender`, `p_req_date`, `indication_of_transfusion`) VALUES
 (0, '2', 'BB1', 'A+', 'Positive', 'Whole Blood', 'Not Applicable', 'Calcutta Medical College', '142/26/31', 'Farukh Shah', 'Mostafa Seikh', '142/26/31', 42, 'Male', '2017-02-14', 'Acute Haemorrhage'),
-(1, '2', 'BB2', 'A+', 'Positive', 'Whole Blood', 'Not Applicable', 'SSKM', '100/20/31', 'Debarpan Ganguly', 'Debdyut Hajra', '100/20/31', 52, 'Male', '2017-02-13', 'Routine Surgery');
+(1, '2', 'BB2', 'A+', 'Positive', 'Whole Blood', 'Not Applicable', 'SSKM', '100/20/31', 'Debarpan Ganguly', 'Debdyut Hajra', '100/20/31', 52, 'Male', '2017-02-13', 'Routine Surgery'),
+(2, '1', 'BB4', 'A+', 'Positive', 'Whole Blood', 'Not Applicable', 'Serampore Health Care', '144/25/65', 'Snigdha Saha', 'Gourab Singh', '144/25/65/112', 65, 'Male', '2017-02-15', 'Routine Surgery'),
+(3, '1', 'BB8', 'A+', 'Positive', 'Whole Blood', 'Not Applicable', 'RG Kar Hospital', '115/23/189', 'Sayak Mondal', 'Dhritiman Saha', '115/23/189/5263', 79, 'Male', '2017-02-07', 'Chronic Anaemia');
 
 --
 -- Indexes for dumped tables

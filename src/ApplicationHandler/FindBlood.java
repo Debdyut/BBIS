@@ -1,51 +1,29 @@
 package ApplicationHandler;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.sql.ResultSet;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 
-import javax.swing.*;
+import javax.swing.JDialog;
 import javax.swing.table.DefaultTableModel;
 
 import DatabaseHandler.DatabaseHandler;
 
-public class SearchInventoryPanel extends JPanel implements Runnable {
+public class FindBlood extends SearchInventoryPanel {
+
 	
-	javax.swing.JComboBox<String> jComboBox1;
-    javax.swing.JComboBox<String> jComboBox2;
-    javax.swing.JComboBox<String> jComboBox3;
-    javax.swing.JComboBox<String> jComboBox4;
-    javax.swing.JLabel jLabel1;
-    javax.swing.JLabel jLabel2;
-    javax.swing.JLabel jLabel3;
-    javax.swing.JLabel jLabel4;
-    javax.swing.JLabel jLabel5;
-    javax.swing.JPanel jPanel1;
-    javax.swing.JPanel jPanel2;
-    javax.swing.JScrollPane jScrollPane1;
-    javax.swing.JTable jTable1;
-	DefaultTableModel tableModel;
-	javax.swing.JButton jButton1;
-    // End of variables declaration
 	
-	DatabaseHandler dh;
-	ResultSet rs;
-	
-	Thread th;
-	
-	public SearchInventoryPanel(DatabaseHandler dh) {
-		
-		this.dh = dh;		
-		
-		initComponents();
-		
-		th = new Thread(this);
-		th.start();
-		
+	public FindBlood(DatabaseHandler dh) {
+		super(dh);
+					
+		jLabel1.setText("Search for Blood");
+				
 	}
+
 	
-	public void initComponents() {
+public void initComponents() {
 		
 		jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -85,6 +63,8 @@ public class SearchInventoryPanel extends JPanel implements Runnable {
         jLabel2.setText("Group: ");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" }));
+        
+        //jComboBox1.setSelectedItem(anObject);
 
         jLabel3.setText("RH:");
 
@@ -121,8 +101,9 @@ public class SearchInventoryPanel extends JPanel implements Runnable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				searchInventory();
+				findBlood();
 			}
+			
         	
         });
         
@@ -170,31 +151,13 @@ public class SearchInventoryPanel extends JPanel implements Runnable {
         );
 
                
-        String[] colHeads = {"Bag Number", "Blood Group", "RH", "Type", "Component", "Donor ID", "Date of Collection", "Expiry Date", ""};
+        String[] colHeads = {"Number of Units", "Blood Bank", "District", "Type", "Phone", "Address"};
         
         tableModel = new DefaultTableModel(colHeads, 0);
         
         jTable1 = new javax.swing.JTable(tableModel);
         
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {        	        	       	
-        	
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-            	int row = jTable1.rowAtPoint(evt.getPoint());
-                int col = jTable1.columnAtPoint(evt.getPoint());                
-                if(col == 8) {
-                	
-                	IssueBlood dialog = new IssueBlood(new javax.swing.JFrame(), true, dh, jComboBox1.getSelectedItem().toString(), jComboBox2.getSelectedItem().toString(), jComboBox3.getSelectedItem().toString(), jComboBox4.getSelectedItem().toString(), jTable1.getValueAt(row, 0).toString());
-                    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                    dialog.setTitle("Issue Blood");
-                    dialog.setVisible(true);
-                	
-                    searchInventory();
-                	
-                }
-            }
-        });
-        
+           
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -222,48 +185,45 @@ public class SearchInventoryPanel extends JPanel implements Runnable {
         );
 		
 	}
-
 	
-	
-	public void searchInventory() {
+	private void findBlood() {
+		// TODO Auto-generated method stub
 		
 		String sqlStatement;
 		
 		StringBuilder query = new StringBuilder();
-		query.append("select blood_bag_number, abo, rh, type, Component, donorid, date_of_collection, expiry_date from blood_inventory where ");		
-		query.append("bbid = '" + ApplicationData.bbID + "'");
-		query.append(" and ");
-		query.append("abo = '" + jComboBox1.getSelectedItem().toString() + "'");
+		query.append("SELECT count(*), blood_bank_list.name, blood_bank_list.district, blood_bank_list.type, blood_bank_list.phone, blood_bank_list.address FROM `blood_inventory` join blood_bank_list on blood_inventory.bbid = blood_bank_list.id WHERE ");
+		query.append("abo = '" + jComboBox1.getSelectedItem().toString() + "'");		
 		query.append(" and ");
 		query.append("rh = '" + jComboBox2.getSelectedItem().toString() + "'");
 		query.append(" and ");
-		query.append("type = '" + jComboBox3.getSelectedItem().toString() + "'");
+		query.append("blood_inventory.type = '" + jComboBox3.getSelectedItem().toString() + "'");
 		if(jComboBox3.getSelectedItem().toString().equals("Component")) {
 			query.append(" and ");		
 			query.append("Component = '" + jComboBox4.getSelectedItem().toString() + "'");
 		}
+		query.append(" group by bbid order by blood_bank_list.district ASC");
 		
-		sqlStatement = query.toString();		
+		sqlStatement = query.toString();			
 		
 		while (tableModel.getRowCount() > 0) {
 			tableModel.removeRow(0);
 		}
 		
+
 		try {
 			rs = dh.read(sqlStatement);						
 			
 			while(rs.next()) {
 			
-				Object[] obj =  new Object[9];
-				obj[0] = rs.getString(1);
+				Object[] obj =  new Object[6];
+				obj[0] = rs.getInt(1);
 				obj[1] = rs.getString(2);
 				obj[2] = rs.getString(3);
 				obj[3] = rs.getString(4);
 				obj[4] = rs.getString(5);
 				obj[5] = rs.getString(6);
-				obj[6] = rs.getDate(7).toString();
-				obj[7] = rs.getDate(8).toString();
-				obj[8] = "Issue";
+				
 				
 				tableModel.addRow(obj);
 				
@@ -273,25 +233,23 @@ public class SearchInventoryPanel extends JPanel implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
-
+	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
 		
-		searchInventory();
+		findBlood();
 		
 		try {
 			Thread.sleep(10000);
-			run();
+			this.run();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
-	
-	
-	
+		
 }

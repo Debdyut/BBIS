@@ -21,11 +21,16 @@ public class QueryPanel {
 
 		this.jp = jp;
 		
-		initComponents();
+		try {
+			initComponents();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
-	private void initComponents() {
+	public void initComponents() throws InterruptedException {
 		
 		
 		
@@ -36,15 +41,28 @@ public class QueryPanel {
 		
 		SearchInventoryPanel si = new SearchInventoryPanel(dh);
 		
+		Thread.sleep(1000);
+		
 		jp.add("Search Inventory", si);
 		
-		SearchDonorPanel sd = new SearchDonorPanel(dh);
+		FindBlood fb = new FindBlood(dh);
+		
+		Thread.sleep(1000);
+		
+		jp.add("General Blood Search", fb);
+		
+		SearchDonorPanel sd = new SearchDonorPanel(dh);		
+		
+		Thread.sleep(1000);
 		
 		jp.add("Search Donor", sd);
 		
 		BloodIssueHistoryPanel bihp = new BloodIssueHistoryPanel(dh);
 		
+		Thread.sleep(1000);
+		
 		jp.add("Blood Issue History", bihp);
+		
 				
 		cd.show(jp, "Search Inventory");
 						

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2017 at 11:38 AM
+-- Generation Time: Mar 13, 2017 at 05:05 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -33,7 +33,7 @@ CREATE TABLE `blood_inventory` (
   `date_of_collection` date NOT NULL,
   `expiry_date` date NOT NULL,
   `type` enum('Whole Blood','Component') NOT NULL,
-  `Component` enum('Packed Red Cell','Platelet Concentrate','Fresh Frozen Plasma','Cyro Precipitate') NOT NULL,
+  `Component` enum('Packed Red Cell','Platelet Concentrate','Fresh Frozen Plasma','Cyro Precipitate','Not Applicable') NOT NULL,
   `bbid` varchar(50) NOT NULL,
   `donorid` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -43,7 +43,14 @@ CREATE TABLE `blood_inventory` (
 --
 
 INSERT INTO `blood_inventory` (`blood_bag_number`, `abo`, `rh`, `date_of_collection`, `expiry_date`, `type`, `Component`, `bbid`, `donorid`) VALUES
-('BB3', 'B+', 'Positive', '2017-03-05', '2018-03-05', 'Component', 'Cyro Precipitate', '2', 'D00000000003');
+('BB1', 'A+', 'Positive', '2017-02-24', '2018-02-16', 'Whole Blood', 'Not Applicable', '2', 'D000000000001'),
+('BB10', 'A+', 'Positive', '2017-02-01', '2018-02-09', 'Whole Blood', 'Not Applicable', '1', 'D00000000002'),
+('BB2', 'A+', 'Positive', '2017-03-15', '2018-04-11', 'Whole Blood', 'Not Applicable', '2', 'D0000000001'),
+('BB3', 'B+', 'Positive', '2017-03-05', '2018-03-05', 'Component', 'Cyro Precipitate', '2', 'D00000000003'),
+('BB5', 'B+', 'Positive', '2017-02-07', '2017-06-14', 'Component', 'Packed Red Cell', '1', 'D00000000001'),
+('BB6', 'AB-', 'Negative', '2017-02-24', '2017-04-12', 'Whole Blood', 'Not Applicable', '2', 'D00000000003'),
+('BB7', 'A+', 'Positive', '2017-02-10', '2017-09-20', 'Whole Blood', 'Not Applicable', '2', 'D00000000002'),
+('BB9', 'A+', 'Positive', '2017-02-09', '2017-05-23', 'Whole Blood', 'Not Applicable', '1', 'D000000000001');
 
 --
 -- Indexes for dumped tables
