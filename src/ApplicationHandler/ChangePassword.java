@@ -255,8 +255,6 @@ public class ChangePassword extends JDialog  implements ActionListener  {
     		jLabel6.setForeground(java.awt.Color.red);
             jLabel6.setText("Weak");
     	}
-    	
-    	
 	        	
     }
     

@@ -41,13 +41,11 @@ public class QueryPanel {
 		
 		SearchInventoryPanel si = new SearchInventoryPanel(dh);
 		
-		Thread.sleep(1000);
 		
 		jp.add("Search Inventory", si);
 		
 		FindBlood fb = new FindBlood(dh);
-		
-		Thread.sleep(1000);
+				
 		
 		jp.add("General Blood Search", fb);
 		

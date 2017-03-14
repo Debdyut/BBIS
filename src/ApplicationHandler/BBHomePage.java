@@ -83,6 +83,16 @@ public class BBHomePage extends JPanel implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				java.awt.Window win[] = java.awt.Window.getWindows(); 
+				for(int i=0;i<win.length;i++){ 
+				win[i].dispose(); 
+				} 
+				
+				Login dialog = new Login(new javax.swing.JFrame(), true);
+		        dialog.setTitle("Login");
+		        dialog.setSize(500, 280);
+		        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		        dialog.setVisible(true);
 								
 			}        	        	
         	
