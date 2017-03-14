@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 import javax.swing.*;
 
@@ -85,6 +86,12 @@ public class ChangePassword extends JDialog  implements ActionListener  {
 
         jLabel6.setForeground(java.awt.Color.red);
         jLabel6.setText("Weak");
+        
+        jPasswordField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -180,8 +187,7 @@ public class ChangePassword extends JDialog  implements ActionListener  {
 							
 						}
 						
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
+					} catch (SQLException e1) {						
 						e1.printStackTrace();
 					}
 				}
@@ -237,6 +243,23 @@ public class ChangePassword extends JDialog  implements ActionListener  {
     	
     }
 
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {                                            
+    	
+    	String s1 = jPasswordField2.getText().toString();
+    	
+    	if(s1.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}")) {
+    		jLabel6.setForeground(new Color(30, 120, 0));
+            jLabel6.setText("Strong");
+    	}
+    	else {
+    		jLabel6.setForeground(java.awt.Color.red);
+            jLabel6.setText("Weak");
+    	}
+    	
+    	
+	        	
+    }
+    
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

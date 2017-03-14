@@ -29,10 +29,23 @@ public class BBHomePage extends JPanel implements ActionListener {
 	
 	DatabaseHandler dh;
 	
+	QueryPanel qp;
+	TaskListPanel tlp;
+	
 	public BBHomePage(DatabaseHandler dh) {		
 		this.dh = dh;
 		
+		jPanel5 = new javax.swing.JPanel();
+		jPanel6 = new javax.swing.JPanel();
+		
+		specialInit();
+		
 		initComponents();
+	}
+	
+	public void specialInit() {		
+		qp = new QueryPanel(jPanel5, dh);
+		tlp = new TaskListPanel(jPanel6, qp);
 	}
 	
 	public void initComponents() {
@@ -45,7 +58,7 @@ public class BBHomePage extends JPanel implements ActionListener {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        //jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -58,15 +71,24 @@ public class BBHomePage extends JPanel implements ActionListener {
         
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jPanel6 = new javax.swing.JPanel();
+        //jPanel6 = new javax.swing.JPanel();
         
         jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Blood Bank Information System");
 
-        jButton1.setText("Sign Out");
+        jButton1.setText("Sign Out"); 
+        jButton1.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+								
+			}        	        	
+        	
+        });
         
-        QueryPanel qp = new QueryPanel(jPanel5, dh);
+        
         
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel2.setForeground(Color.WHITE);
@@ -124,7 +146,7 @@ public class BBHomePage extends JPanel implements ActionListener {
         jLabel3.setText("Tasks");
 
         
-        TaskListPanel tlp = new TaskListPanel(jPanel6, qp);        
+                
         
         
 
@@ -177,8 +199,8 @@ public class BBHomePage extends JPanel implements ActionListener {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                //.addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,8 +209,8 @@ public class BBHomePage extends JPanel implements ActionListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    //.addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );

@@ -53,13 +53,11 @@ public class QueryPanel {
 		
 		SearchDonorPanel sd = new SearchDonorPanel(dh);		
 		
-		Thread.sleep(1000);
 		
 		jp.add("Search Donor", sd);
 		
 		BloodIssueHistoryPanel bihp = new BloodIssueHistoryPanel(dh);
 		
-		Thread.sleep(1000);
 		
 		jp.add("Blood Issue History", bihp);
 		

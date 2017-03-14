@@ -60,8 +60,7 @@ public class IssueBlood extends JDialog {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    // End of variables declaration        
+    private javax.swing.JTextField jTextField7; 
     
     UtilDateModel model; 
     JDatePanelImpl datePanel;

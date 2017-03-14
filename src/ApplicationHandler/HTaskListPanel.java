@@ -14,12 +14,9 @@ public class HTaskListPanel extends TaskListPanel {
 
 	public HTaskListPanel(JPanel jp, QueryPanel qp) {
 		super(jp, qp);
-		// TODO Auto-generated constructor stub
 	}
 	
-	public void initComponents() {
-		
-		
+	public void initComponents() {		
 		
 		li1 = new JLabel("Search for Blood"); li1.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		li2 = new JLabel("Search Donor"); li2.setCursor(new Cursor(Cursor.HAND_CURSOR));		
@@ -47,9 +44,6 @@ public class HTaskListPanel extends TaskListPanel {
 		jp.add(Box.createRigidArea(new Dimension(0, 10)));
 		
 		jp.add(li2);
-		
-			
-		
 		
 	}
 
